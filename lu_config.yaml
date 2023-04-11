@@ -1,0 +1,20 @@
+input_features:
+- name: title
+  type: text
+  encoder:
+    type: auto_transformer
+    pretrained_model_name_or_path: bigscience/bloom-3b
+    trainable: true
+    reduce_output: sum
+    pretrained_kwargs: null
+output_features:
+- name: class
+  type: category
+trainer:
+  learning_rate: 1.0e-05
+  epochs: 3
+  batch_size: auto
+backend:
+  type: ray
+  trainer:
+    strategy: fsdp
