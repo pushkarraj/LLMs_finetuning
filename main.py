@@ -46,7 +46,7 @@ config = {
   },
   "backend": {
     "type": "ray",
-    "cache_dir": "s3://ludwigconfig/ludwig_config/",
+    #"cache_dir": "s3://ludwigconfig/ludwig_config/",
     # "loader": {
     #     "fully_executed": False,
     #     "window_size_bytes": 500000000,
@@ -65,9 +65,5 @@ config = {
 
 model = LudwigModel(config,
                     logging_level=logging.INFO,
-                    backend=None,
-                    gpus=None,
-                    gpu_memory_limit=None,
-                    allow_parallel_threads=True,
-                    callbacks=None)
-train_stats, preprocessed_data, output_directory = model.train(dataset=train_df)
+                    )
+train_stats, preprocessed_data, output_directory = model.train(dataset='new.csv',skip_save_processed_input=True)

@@ -3,9 +3,8 @@ input_features:
   type: text
   encoder:
     type: auto_transformer
-    pretrained_model_name_or_path: bigscience/bloom-3b
+    pretrained_model_name_or_path: bigscience/bloom-1b1
     trainable: true
-    reduce_output: sum
     pretrained_kwargs: null
 output_features:
 - name: class
@@ -14,7 +13,23 @@ trainer:
   learning_rate: 1.0e-05
   epochs: 3
   batch_size: auto
+  max_batch_size: 512
 backend:
   type: ray
+  cache_dir: s3://ludwigconfig/ludwig_config/
+  processor:
+    type: dask
+    parallelism: 16
+    persist: false
   trainer:
     strategy: fsdp
+    use_gpu: true
+    num_workers: 2
+    resources_per_worker:
+      CPU: 4
+      GPU: 1
+    loader:
+      fully_executed: false
+
+
+#ludwig train --config lu_config.yaml --dataset new.csv
