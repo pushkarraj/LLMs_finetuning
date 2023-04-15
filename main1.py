@@ -17,7 +17,7 @@ config = {
             "name": "title",  # The name of the input column
             "type": "text",  # Data type of the input column
             "encoder": {
-                "type": "auto_transformer",  # The model architecture to use
+                "type": "auto_transformer",
                 "pretrained_model_name_or_path": "bigscience/bloom-560m",
                 "trainable": True,
                 "reduce_output": "sum",
@@ -34,7 +34,7 @@ config = {
     "trainer": {
         "learning_rate": 0.00001,
         "epochs": 3,  # We'll train for three epochs. Training longer might give
-        "batch_size": 128,
+        "batch_size": 256,
     },
     "backend": {
         "type": "ray",
@@ -47,8 +47,8 @@ config = {
         },
         "trainer": {
             "strategy": "fsdp",
-            "use_gpu": True,
-            "num_workers": 2,
+            # "use_gpu": True,
+            # "num_workers": 2,
         # "loader": {
         #     "fully_executed": False
         #   }
@@ -59,4 +59,4 @@ config = {
 
 
 model = LudwigModel(config, logging_level=logging.INFO)
-train_stats, preprocessed_data, output_directory = model.train(dataset=train_df)
+train_stats, preprocessed_data, output_directory = model.train(dataset=train_df,)
